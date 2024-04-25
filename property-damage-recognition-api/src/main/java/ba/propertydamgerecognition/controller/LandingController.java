@@ -10,6 +10,6 @@ public class LandingController {
 
     @GetMapping
     public String getInfo() {
-        return "info";
+        return "info1";
     }
 }
