@@ -21,10 +21,8 @@ public class PhotoController {
 
 
   @PostMapping("/upload-image")
-  public ResponseEntity<String> uploadImage(@RequestBody PhotoDTO photoDTO) throws IOException,
-      ParseException {
-      service.postRequest(photoDTO);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
+  public ResponseEntity<String> uploadImage(@RequestBody PhotoDTO photoDTO) {
+      return ResponseEntity.status(HttpStatus.OK).body(service.postToAzureCloud(photoDTO));
     }
 
 }

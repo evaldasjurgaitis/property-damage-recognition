@@ -6,5 +6,5 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class DocumentDTO {
   private int id;
-  private MultipartFile base64Bytes;
+  private String photo;
 }
