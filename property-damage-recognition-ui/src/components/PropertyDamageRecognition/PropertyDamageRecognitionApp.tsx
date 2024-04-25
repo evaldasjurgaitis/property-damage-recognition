@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {Incident} from './typing';
+import React, {useState} from 'react';
+import {DamageInfo} from './typing';
 
 const PropertyDamageRecognitionApp = () => {
-    const [incidents, setIncidents] = useState<Incident[]>([]);
     const [file, setFile] = useState<File | null>(null);
+    const [damageInfo, setDamageInfo] = useState<DamageInfo | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -27,50 +26,61 @@ const PropertyDamageRecognitionApp = () => {
                 });
 
                 const data = await result.json();
-
+                setDamageInfo(data);
                 console.log(data);
             } catch (error) {
                 console.error(error);
             }
         }
     };
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/incidents').then((response) => {
-            setIncidents(response.data);
-        });
-    }, []);
 
+    const damgeInfoDesc = (damageInfo: DamageInfo) => {
+        if (!damageInfo.frontDamages) {
+            return (<div>Mašinos vin kodas: {damageInfo.vin}</div>)
+        }
+
+        return (<div>
+            <br/>
+            <div>Pažeistos vietos:</div>
+            {damageInfo.frontDamages.bumper &&
+                <div><strong>Priekinis bamperis:</strong> {damageInfo.frontDamages.bumper * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.bumper * 100}</strong> : damageInfo.frontDamages.bumper * 100}
+                </div>}
+            {damageInfo.frontDamages.glass &&
+                <div><strong>Priekinis langas: </strong> {damageInfo.frontDamages.glass * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.glass * 100}</strong> : damageInfo.frontDamages.glass * 100}</div>}
+            {damageInfo.frontDamages.grill &&
+                <div><strong>Priekinės grotelės:</strong> {damageInfo.frontDamages.grill * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.grill * 100}</strong> : damageInfo.frontDamages.grill * 100}</div>}
+            {damageInfo.frontDamages.hood &&
+                <div><strong>Variklio dangtis: </strong>{damageInfo.frontDamages.hood * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.hood * 100}</strong> : damageInfo.frontDamages.hood * 100}</div>}
+            {damageInfo.frontDamages.lampLeft &&
+                <div><strong>Priekinė kairė lempa: </strong> {damageInfo.frontDamages.lampLeft * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.lampLeft * 100}</strong> : damageInfo.frontDamages.lampLeft * 100}
+                </div>}
+            {damageInfo.frontDamages.lampRight &&
+                <div><strong>Priekinė dešnė lempa: </strong> {damageInfo.frontDamages.lampRight * 100 > 70 ?
+                    <strong>{damageInfo.frontDamages.lampRight * 100}</strong> : damageInfo.frontDamages.lampRight * 100}
+                </div>}
+        </div>)
+    }
 
     return (
         <div>
-            <h2>Rezultatai</h2>
-            <table>
-                <tr>
-                    <th>Incidento registravimo numeris</th>
-                    <th>Polisas</th>
-                    <th>Incidento registracijos data</th>
-                </tr>
-
-                {incidents.map((it) => {
-                    return (<tr>
-                        <td>{it.id}</td>
-                        <td>{it.policyNo}</td>
-                        <td>{it.createdDate}</td>
-                        <td>
-                            <input
-                                type="file"
-                                name="myImage"
-                                onChange={handleFileChange}
-                            />
-                        </td>
-                        <td>
-                            {file && <button onClick={handleUpload}>Upload a file</button>}
-
-                        </td>
-                    </tr>)
-                })}
-            </table>
-
+            <h2>Turto žalos nustatymas</h2>
+            <label>Įkelkite nuotrauką:</label>
+            <input
+                type="file"
+                name="myImage"
+                onChange={handleFileChange}
+            />
+            {file && <button onClick={handleUpload}>Tikrinti</button>}
+            {damageInfo && damgeInfoDesc(damageInfo)}
+            <br/>
+            {damageInfo && (<div>
+                <img src={`data:image/jpeg;base64,${damageInfo.base64Output}`}/>
+            </div>)}
         </div>
     );
 
