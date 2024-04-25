@@ -1,9 +1,7 @@
 package ba.propertydamgerecognition.controller;
 
 import ba.propertydamgerecognition.DTO.PhotoDTO;
-import ba.propertydamgerecognition.service.Service;
-import java.io.IOException;
-import net.minidev.json.parser.ParseException;
+import ba.propertydamgerecognition.service.AzureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PhotoController {
 
   @Autowired
-  private Service service;
-
+  private AzureService azureService;
 
   @PostMapping("/upload-image")
   public ResponseEntity<String> uploadImage(@RequestBody PhotoDTO photoDTO) {
-      return ResponseEntity.status(HttpStatus.OK).body(service.postToAzureCloud(photoDTO));
+      return ResponseEntity.status(HttpStatus.OK).body(azureService.postPhotoToAzureCloud(photoDTO));
     }
 
 }

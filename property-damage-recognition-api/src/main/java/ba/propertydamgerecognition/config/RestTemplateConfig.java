@@ -1,4 +1,4 @@
-package ba.propertydamgerecognition.configuration;
+package ba.propertydamgerecognition.config;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -21,8 +21,7 @@ public class RestTemplateConfig {
     SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
     String proxyHost = "proxy";
     int proxyPort = 9090;
-    Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
-    factory.setProxy(proxy);
+    factory.setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort)));
     return factory;
   }
 }
