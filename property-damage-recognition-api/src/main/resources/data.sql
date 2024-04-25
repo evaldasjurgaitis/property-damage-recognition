@@ -1,3 +1,4 @@
+
 INSERT INTO incident (id, created_date, updated_date, policy_no)
 VALUES (1, '2024-04-25 14:30:00', '2023-12-31 14:30:00', 924563);
 
