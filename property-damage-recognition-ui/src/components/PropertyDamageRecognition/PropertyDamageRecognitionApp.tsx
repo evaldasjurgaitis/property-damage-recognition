@@ -15,7 +15,32 @@ const PropertyDamageRecognitionApp = () => {
 
     return (
         <div>
-            <h1>Airport search panel</h1>
+            <h2>Rezultatai</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>POLISAS</th>
+                    <th>DATA</th>
+                </tr>
+
+
+                <tr>
+                    <th>Company</th>
+                    <th>Contact</th>
+                    <th>Country</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                </tr>
+            </table>
+
         </div>
     );
 
