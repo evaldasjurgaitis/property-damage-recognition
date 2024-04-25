@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-
+import {Incident} from './typing';
 
 const PropertyDamageRecognitionApp = () => {
+    const [incidents, setIncidents] = useState<Incident[]>([]);
 
     useEffect(() => {
-        console.log("evaldas")
         axios.get('http://localhost:8080/api/incidents').then((response) => {
-            console.log(response)
-
+            setIncidents(response.data);
         });
     }, []);
 
@@ -18,27 +17,18 @@ const PropertyDamageRecognitionApp = () => {
             <h2>Rezultatai</h2>
             <table>
                 <tr>
-                    <th>ID</th>
-                    <th>POLISAS</th>
-                    <th>DATA</th>
+                    <th>Incidento registravimo numeris</th>
+                    <th>Polisas</th>
+                    <th>Incidento registracijos data</th>
                 </tr>
 
-
-                <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Country</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
+                {incidents.map((it) => {
+                    return (<tr>
+                        <td>{it.id}</td>
+                        <td>{it.policyNo}</td>
+                        <td>{it.createdDate}</td>
+                    </tr>)
+                })}
             </table>
 
         </div>
@@ -46,5 +36,5 @@ const PropertyDamageRecognitionApp = () => {
 
 
 };
-
 export default PropertyDamageRecognitionApp;
+

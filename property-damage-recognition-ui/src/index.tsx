@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import reportWebVitals from './reportWebVitals';
-import AirportApp from './components/PropertyDamageRecognition/PropertyDamageRecognitionApp';
+import PropertyDamageRecognitionApp from './components/PropertyDamageRecognition/PropertyDamageRecognitionApp';
 
 ReactDOM.render(
     <React.StrictMode>
-        <AirportApp />
+        <PropertyDamageRecognitionApp />
     </React.StrictMode>,
     document.getElementById('root')
 );

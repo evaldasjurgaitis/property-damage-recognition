@@ -1,5 +1,5 @@
 export type Incident = {
     id: number;
-    string: string | null;
+    createdDate: string | null;
     policyNo: number;
 }
