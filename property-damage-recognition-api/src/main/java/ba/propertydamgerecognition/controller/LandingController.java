@@ -12,4 +12,7 @@ public class LandingController {
     public String getInfo() {
         return "info1";
     }
+    // gauname damegu tipus
+
+
 }
